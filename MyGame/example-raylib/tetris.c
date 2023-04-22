@@ -4,22 +4,26 @@
 #define BOX_SIZE 50
 
 // Objects
-enum PieceShape
-{
-	Square,
-	LShape,
-	TShape,
-	Straight,
-	ZShape
-};
-typedef enum PieceShape PieceShape;
 
-typedef struct Piece
-{
-	Vector2 position;
+typedef struct Piece {
+	//int spawnPoint[4][4];
+	int centerX;
+	int centerY;
 	Color color;
-	Vector2 speed;
+};
+
+struct Piece* PieceConstructor(int* spawnPointInput[], int centerXInput, int centerYInput, Color colorInput)
+{
+	struct Piece* lShape = malloc(sizeOf(struct Piece*));
+	//memcpy(lShape->spawnPoint, spawnPointInput);
+	lShape->centerX = centerXInput;
+	lShape->centerY = centerYInput;
+	lShape->color = colorInput;
 } Piece;
+
+void PieceDestructor(struct Piece* piece){
+	free(piece);
+}
 // global variables
 
 static const int screenHeight = 800;
@@ -38,6 +42,7 @@ static void DrawGame();
 static void UpdateGame();
 static void UnloadGame();
 
+
 // HEADERS
 
 
@@ -55,8 +60,11 @@ int main()
 
 }
 
-static void InitGame()
-{
+static void InitGame(){
+	printf("INIT :\n");
+	int array[4][4] = { {0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0} };
+	struct Piece lShape = *PieceConstructor(array, 10, 20, RED);
+	printf("%d %d %s :\n", lShape.centerX, lShape.centerY, lShape.color);
 	
 }
 static void UpdateAndDraw()
@@ -71,4 +79,12 @@ static void DrawGame()
 	{
 		
 	}
+}
+
+static void UpdateGame() {
+
+}
+
+static void UnloadGame() {
+
 }
