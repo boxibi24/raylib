@@ -158,6 +158,7 @@
     <ClCompile Include="..\..\examples\shaders\shaders_basic_lighting.c" />
     <ClCompile Include="snake.c" />
     <ClCompile Include="snake_remake.c" />
+    <ClCompile Include="tetris.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
