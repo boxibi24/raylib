@@ -1,8 +1,9 @@
 #include "raylib.h"
 
 // Some defines
-#define SNAKE_LENGTH 24
+#define SNAKE_LENGTH 50
 #define BOX_SIZE 50
+#define FRAME_COUNTER_MODULO_CAP 1
 
 // Types and structure definition
 typedef struct Snake
@@ -35,7 +36,9 @@ static bool isFruitAvailable = false;
 static bool shouldFruitSpawn = false;
 static Vector2 snakeSpeed = { 0 };
 static int frameCounter = 0;
+static int frameCounterModulo = 40;
 static int allowInput = false;
+static int fruitCounter = 0;
 
 // Modules declaration (local)
 static void InitGame(void);
@@ -69,7 +72,8 @@ static void InitGame(void)
 	offset.x = screenWidth % BOX_SIZE;
 	offset.y = screenHeight % BOX_SIZE;
 	tailCount = 0;
-	snakeSpeed = (Vector2){ BOX_SIZE, 0 };
+	snakeSpeed = (Vector2){ BOX_SIZE, 0 }; 
+	frameCounterModulo = 40;
 	// snake initial position
 	for (int i = 0; i < SNAKE_LENGTH; i++)
 	{
@@ -93,7 +97,6 @@ static void InitGame(void)
 static void UpdateDrawFrame(void)
 {
 	UpdateGame();
-	
 	DrawGame();
 }
 
@@ -128,7 +131,7 @@ static void UpdateGame(void)
 			}
 			
 			// Snake movement
-			if (frameCounter % 5 == 0)
+			if (frameCounter % frameCounterModulo == 0)
 			{
 				// tail positions
 				for (int i = tailCount; i > 0; i--)
@@ -175,8 +178,16 @@ static void UpdateGame(void)
 			if (snake[0].position.x == fruit.position.x && snake[0].position.y == fruit.position.y)
 			{
 				tailCount++;
+				fruitCounter++;
 				shouldFruitSpawn = true;
 				isFruitAvailable = false;
+				frameCounterModulo -= 10;
+				if (frameCounterModulo < FRAME_COUNTER_MODULO_CAP) {
+					frameCounterModulo += 10;
+				}
+				if (fruitCounter == 49) {
+					gameOver = true;
+				}
 			}
 			
 
@@ -193,7 +204,6 @@ static void UpdateGame(void)
 			
 			}
 
-			printf("UPDATE : %d\n", gameOver);
 			// collision with self
 			for (int i = 1; i <= tailCount; i++)
 			{
@@ -224,7 +234,6 @@ static void DrawGame(void)
 	BeginDrawing();
 	
 	ClearBackground(RAYWHITE);
-	printf("DRAW : %d\n", gameOver);
 	if (!gameOver)
 	{
 		// Draw grid vertical
