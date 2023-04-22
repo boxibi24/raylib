@@ -93,6 +93,7 @@ static void InitGame(void)
 static void UpdateDrawFrame(void)
 {
 	UpdateGame();
+	
 	DrawGame();
 }
 
@@ -144,6 +145,7 @@ static void UpdateGame(void)
 			}
 		
 			
+			
 		
 		
 			// handle fruit
@@ -176,21 +178,29 @@ static void UpdateGame(void)
 				shouldFruitSpawn = true;
 				isFruitAvailable = false;
 			}
+			
+
 			// collision with wall
-			/*if ((snake[0].position.x > screenWidth - offset.x || snake[0].position.x < 0) || 
-				(snake[0].position.y > screenHeight - offset.y || snake[0].position.y < 0)) 
+			/*if ((snake[0].position.x > screenWidth - offset.x || snake[0].position.x < 0) ||
+				(snake[0].position.y > screenHeight - offset.y || snake[0].position.y < 0))
 					gameOver = true;*/
 			if (((snake[0].position.x) > (screenWidth - offset.x)) ||
 				((snake[0].position.y) > (screenHeight - offset.y)) ||
 				(snake[0].position.x < 0) || (snake[0].position.y < 0))
 			{
+
 				gameOver = true;
+			
 			}
 
+			printf("UPDATE : %d\n", gameOver);
 			// collision with self
 			for (int i = 1; i <= tailCount; i++)
 			{
-				gameOver = (snake[0].position.x == snake[i].position.x) && (snake[0].position.y == snake[i].position.y);
+				if ((snake[0].position.x == snake[i].position.x) && (snake[0].position.y == snake[i].position.y)) {
+					gameOver = false;
+				}
+				
 				if (gameOver)
 				{
 					break;
@@ -214,7 +224,7 @@ static void DrawGame(void)
 	BeginDrawing();
 	
 	ClearBackground(RAYWHITE);
-	
+	printf("DRAW : %d\n", gameOver);
 	if (!gameOver)
 	{
 		// Draw grid vertical
