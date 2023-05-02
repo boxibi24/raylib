@@ -5,10 +5,10 @@
 
 
 // Objects
-
 enum PieceShape
-{
-	Square,
+typedef struct Piece {
+	//int spawnPoint[4][4];
+	int centerX;
 	LShape,
 	TShape,
 	Straight,
@@ -22,7 +22,6 @@ typedef struct Piece
 	Color color;
 	Vector2 speed;
 } Piece;
-
 
 static const int screenHeight = 800;
 static const int screenWidth = 500;
@@ -59,6 +58,7 @@ int main()
 }
 
 static void InitGame()
+	printf("INIT :\n");
 {
 	Offset.x = screenWidth % BOX_SIZE;
 	Offset.y = screenHeight % BOX_SIZE;
@@ -73,6 +73,4 @@ static void DrawGame()
 {
 	if (!bGameOver)
 	{
-		//DrawLine();
-	}
-}
+

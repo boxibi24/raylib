@@ -40,6 +40,7 @@ static int frameCounterModulo = 40;
 static int allowInput = false;
 static int fruitCounter = 0;
 
+
 // Modules declaration (local)
 static void InitGame(void);
 static void UpdateGame(void);
@@ -47,7 +48,7 @@ static void DrawGame(void);
 static void UnloadGame(void);
 static void UpdateDrawFrame(void);
 
-int main(void)
+int snakeRemakeMain(void)
 {
 	InitWindow(screenWidth, screenHeight, "The Snake Game");
 	InitGame();
